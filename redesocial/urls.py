@@ -14,35 +14,32 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+
 from django.contrib import admin
-from django.urls import include,path
+from django.urls import include, path
 from rest_framework import routers
 from rest_framework.response import Response
 from rest_framework import status
-from user.views import UserRegistrationAPIView, UserLoginAPIView, PostAPIView, CommentAPIView, LikeAPIView
+from user.views import (
+    UserViews,
+    UserLoginAPIView,
+    PostAPIView,
+    CommentAPIView,
+    LikeAPIView,
+)
 from django.views.generic import TemplateView
-from django.http import HttpResponse
+from django.conf import settings
+from django.conf.urls.static import static
 
-router= routers.DefaultRouter()
-router.register(r'user_registration', UserRegistrationAPIView, basename='registration')
-router.register(r'user_login', UserLoginAPIView, basename='login')
-router.register(r'post', PostAPIView, basename='post')
-router.register(r'comment', CommentAPIView, basename='comment')
-router.register(r'like', LikeAPIView, basename='like')
+router = routers.DefaultRouter()
+router.register(r"user", UserViews, basename="registration")
+router.register(r"user_login", UserLoginAPIView, basename="login")
+router.register(r"post", PostAPIView, basename="post")
+router.register(r"comment", CommentAPIView, basename="comment")
+router.register(r"like", LikeAPIView, basename="like")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth', include('rest_framework.urls')),
-    path('api/', include(router.urls)),
-    path('api-auth/logout'),
-    path('api-auth/password/change'),
-    path('api-auth/password/reset'),
-    path('api/user_registration', UserRegistrationAPIView.as_view({'get':'list'}), name='hello'),
-    path('api-auth/login/', UserLoginAPIView.as_view({'get':'list'}), name='login'),
-    path('api/post', PostAPIView.as_view({'get':'list'}), name='post'),
-    path('api/comment', CommentAPIView.as_view({'get':'list'}), name='comment'),
-    path('api/like', LikeAPIView.as_view({'get':'list'}), name='like')
-]
-
-
-
+    path("admin/", admin.site.urls),
+    path("api-auth", include("rest_framework.urls")),
+    path("api/", include(router.urls)),
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

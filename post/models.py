@@ -4,13 +4,11 @@ from django.contrib.auth.models import User
 # Create your models here.
 class Post(models.Model):
     title=models.CharField(max_length=200)
-    image=models.CharField(max_length=200)
+    image=models.ImageField(upload_to='Post')
     user=models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
-    def __str__(self):
-        return self.image
 
 class Comment(models.Model):
     text=models.TextField(max_length=500)
@@ -26,3 +24,4 @@ class Like(models.Model):
 class Like_comment(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE)
     comment=models.ForeignKey(Comment, on_delete=models.CASCADE)
+    

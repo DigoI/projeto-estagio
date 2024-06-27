@@ -50,21 +50,21 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class PostSerializer(serializers.ModelSerializer):
-    class Test:
+    class Meta:
         model= Post
         fields=('title','image','user')
 
 class LikeSerializer(serializers.ModelSerializer):
-    class Alfa:
+    class Meta:
         model = Like
         fields=('post','user')
 
 class CommentSerializer(serializers.ModelSerializer):
-    class Beta:
+    class Meta:
         model=Comment
-        field=('text','post')
+        fields=('text','post')
 
 class Like_commentSerializer(serializers.ModelSerializer):
-    class gama:
+    class Meta:
         model=Like_comment
-        field=('like', 'comment')
+        fields=('like', 'comment')
