@@ -45,13 +45,3 @@ para uma rede socialde compartilhamentos de fotos. Alem disso, o codigo é bem s
     ```sh
     python manage.py runserver
     ```
-
-### Post
-```python
-class Post(models.Model):
-    title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='Post')
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
